@@ -37,7 +37,9 @@
                 دخول للمنصة
             </button>
             
-            <div id="login-msg-box" class="hidden p-4 rounded-2xl text-xs font-bold transition-all animate-fade"></div>
+            <div id="login-msg-box" class="p-4 rounded-2xl text-xs font-bold transition-all animate-fade bg-slate-950 text-purple-400 border border-slate-800">
+                جاهز للإدخال...
+            </div>
         </div>
     </div>
 
@@ -220,12 +222,8 @@
         }
 
         function showMessage(text, type = 'error') {
-            msgBox.classList.remove('hidden');
-            if(type === 'error') {
-                msgBox.className = "p-4 rounded-2xl text-xs font-bold shadow-sm bg-red-500/10 text-red-400 border border-red-500/20";
-            } else {
-                msgBox.className = "p-4 rounded-2xl text-xs font-bold shadow-sm bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
-            }
+            msgBox.className = "p-4 rounded-2xl text-xs font-bold transition-all animate-fade " + 
+                (type === 'error' ? "bg-red-500/10 text-red-400 border border-red-500/20" : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20");
             msgBox.innerText = text;
         }
 
@@ -247,7 +245,6 @@
 
         async function handleLogin() {
             const val = document.getElementById('student-code-input').value.trim();
-            msgBox.classList.add('hidden');
 
             if (!val) {
                 showMessage("برجاء كتابة الكود أولاً!", "error");
@@ -275,7 +272,7 @@
 
         async function verifyAndLoginStudent(code, isAuto) {
             try {
-                if(!isAuto) showMessage("جاري التحقق من الكود...", "success");
+                showMessage("جاري الاتصال بقاعدة البيانات والتحقق...", "success");
                 const docRef = doc(db, "students", code);
                 const snap = await getDoc(docRef);
                 
@@ -300,6 +297,216 @@
                     localStorage.setItem('logged_student_code', code);
                     headerStudentName.innerText = `البطل: ${data.name}`;
                     
-                    if(!isAuto) {
-                        showMessage(`أهلاً بك يا بطل (${data.name})، تم تسجيل الدخول بنجاح!`, "success");
-                 
+                    showMessage(`أهلاً بك يا بطل (${data.name})، تم تسجيل الدخول!`, "success");
+                    setTimeout(() => {
+                        loginScreen.classList.add('hidden');
+                        studentDashboard.classList.remove('hidden');
+                        studentDashboard.classList.add('flex');
+                    }, 800);
+                } else {
+                    if (!isAuto) showMessage("الكود غير موجود في قاعدة البيانات!", "error");
+                }
+            } catch (e) {
+                console.error("Firebase Login Error:", e);
+                showMessage("خطأ تقني: " + e.message, "error");
+            }
+        }
+
+        document.getElementById('logout-admin-btn').addEventListener('click', () => {
+            localStorage.removeItem('is_admin_logged');
+            location.reload();
+        });
+
+        document.getElementById('logout-student-btn').addEventListener('click', () => {
+            localStorage.removeItem('logged_student_code');
+            location.reload();
+        });
+
+        document.getElementById('add-student-btn').addEventListener('click', async () => {
+            const name = document.getElementById('new-student-name').value.trim();
+            const code = document.getElementById('new-student-code').value.trim();
+            const days = parseInt(document.getElementById('new-student-days').value) || 30;
+            const msg = document.getElementById('admin-msg');
+
+            if (!name || !code) {
+                msg.innerText = "أدخل الاسم والكود!";
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-500/10 text-red-400 border border-red-500/20";
+                msg.classList.remove('hidden');
+                return;
+            }
+
+            const expiry = new Date();
+            expiry.setDate(expiry.getDate() + days);
+
+            try {
+                await setDoc(doc(db, "students", code), {
+                    name, code, expiryDate: expiry.toISOString(), deviceId: "", createdAt: new Date().toISOString()
+                });
+                msg.innerText = "تمت إضافة الطالب بنجاح!";
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+                msg.classList.remove('hidden');
+                loadStudentsList();
+            } catch(e) {
+                console.error(e);
+                msg.innerText = "خطأ بالحفظ: " + e.message;
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-500/10 text-red-400 border border-red-500/20";
+                msg.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('add-content-btn').addEventListener('click', async () => {
+            const section = document.getElementById('content-section').value;
+            const title = document.getElementById('content-title').value.trim();
+            const url = document.getElementById('content-url').value.trim();
+            const msg = document.getElementById('content-msg');
+
+            if (!title || !url) {
+                msg.innerText = "أدخل عنوان ورابط الملف!";
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-500/10 text-red-400 border border-red-500/20";
+                msg.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "contents"), {
+                    section, title, url, createdAt: new Date().toISOString()
+                });
+                msg.innerText = "تم نشر المحتوى بنجاح!";
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+                msg.classList.remove('hidden');
+                document.getElementById('content-title').value = "";
+                document.getElementById('content-url').value = "";
+            } catch(e) {
+                console.error(e);
+                msg.innerText = "خطأ بالنشر: " + e.message;
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-500/10 text-red-400 border border-red-500/20";
+                msg.classList.remove('hidden');
+            }
+        });
+
+        window.loadStudentsList = async function() {
+            const tbody = document.getElementById('students-table-body');
+            tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">جاري التحديث...</td></tr>`;
+            try {
+                const snap = await getDocs(collection(db, "students"));
+                if (snap.empty) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">لا توجد أكواد مضافة حتى الآن.</td></tr>`;
+                    return;
+                }
+                let html = "";
+                snap.forEach(d => {
+                    const data = d.data();
+                    const expiry = data.expiryDate ? new Date(data.expiryDate).toLocaleDateString('ar-EG') : "";
+                    const linked = data.deviceId ? '<span class="text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20">مربوط</span>' : '<span class="text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">متاح</span>';
+                    html += `
+                        <tr class="hover:bg-slate-800/40 transition-all">
+                            <td class="p-3 font-bold text-slate-200">${data.name}</td>
+                            <td class="p-3 font-mono text-purple-400">${data.code}</td>
+                            <td class="p-3 text-slate-400">${expiry}</td>
+                            <td class="p-3">${linked}</td>
+                            <td class="p-3 text-center space-x-2 space-x-reverse">
+                                <button onclick="resetDev('${d.id}')" class="bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer">فك الجهاز</button>
+                                <button onclick="delStud('${d.id}')" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer">حذف</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+            } catch(e) {
+                console.error(e);
+                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-400">فشل التحميل: ${e.message}</td></tr>`;
+            }
+        };
+
+        document.getElementById('reload-students-btn').addEventListener('click', loadStudentsList);
+
+        window.resetDev = async function(id) {
+            if(confirm("هل تريد فك ربط جهاز هذا الطالب؟")) {
+                await updateDoc(doc(db, "students", id), { deviceId: "" });
+                loadStudentsList();
+            }
+        };
+
+        window.delStud = async function(id) {
+            if(confirm("هل تريد حذف هذا الطالب نهائياً؟")) {
+                await deleteDoc(doc(db, "students", id));
+                loadStudentsList();
+            }
+        };
+
+        const homeView = document.getElementById('home-view');
+        const subView = document.getElementById('sub-view');
+        const subTitle = document.getElementById('sub-title');
+        const subContent = document.getElementById('sub-content');
+
+        async function openSection(type) {
+            homeView.classList.add('hidden');
+            subView.classList.remove('hidden');
+
+            let titles = {
+                'lectures': 'المحاضرات والشرح الأساسي',
+                'homework': 'الواجبات المنزلية',
+                'questions': 'بنك الأسئلة التدريبي',
+                'exams': 'الامتحانات الشاملة'
+            };
+            subTitle.innerText = titles[type] || 'محتوى المنصة';
+            subContent.innerHTML = `<p class="text-center text-slate-500 py-8">جاري جلب المحتوى...</p>`;
+
+            try {
+                const snap = await getDocs(collection(db, "contents"));
+                let html = "";
+                snap.forEach(docSnap => {
+                    const item = docSnap.data();
+                    if(item.section === type) {
+                        html += `
+                            <div class="p-4 bg-slate-950/50 net-item rounded-2xl border border-slate-800 flex justify-between items-center hover:border-purple-500/30 transition-all">
+                                <div>
+                                    <h4 class="font-bold text-white text-xs md:text-sm">${item.title}</h4>
+                                    <p class="text-slate-400 text-[11px] mt-1">محتوى تعليمي معتمد</p>
+                                </div>
+                                <a href="${item.url}" target="_blank" class="bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition-all">فتح الملف</a>
+                            </div>
+                        `;
+                    }
+                });
+
+                if(!html) {
+                    html = `<p class="text-center text-slate-500 py-10 text-xs">لا توجد ملفات مضافة في هذا القسم حتى الآن.</p>`;
+                }
+                subContent.innerHTML = html;
+            } catch(e) {
+                subContent.innerHTML = `<p class="text-center text-red-400 py-4 text-xs">خطأ في جلب المحتوى: ${e.message}</p>`;
+            }
+        }
+
+        document.querySelectorAll('.card-section, .nav-link').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = el.getAttribute('data-section');
+                if(section) {
+                    openSection(section);
+                    closeMenu();
+                }
+            });
+        });
+
+        document.getElementById('go-home-btn').addEventListener('click', () => {
+            subView.classList.add('hidden');
+            homeView.classList.remove('hidden');
+        });
+
+        const sideMenu = document.getElementById('side-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        document.getElementById('menu-btn').addEventListener('click', () => {
+            sideMenu.classList.remove('translate-x-full');
+            menuOverlay.classList.remove('hidden');
+        });
+        window.closeMenu = function() {
+            sideMenu.classList.add('translate-x-full');
+            menuOverlay.classList.add('hidden');
+        };
+        document.getElementById('close-menu').addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+    </script>
+</body>
+</html>
