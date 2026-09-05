@@ -33,7 +33,6 @@
             
             <input type="text" id="student-code-input" placeholder="أدخل كود الطالب التعريفي..." class="w-full bg-slate-50 border border-slate-200 focus:border-purple-600 focus:ring-4 focus:ring-purple-600/10 focus:outline-none p-4 rounded-2xl text-center font-bold text-lg text-slate-900 transition-all shadow-inner">
             
-            <!-- زر الدخول المباشر المضمن بدالة واضحة -->
             <button type="button" onclick="handleLoginDirect()" class="w-full bg-purple-700 hover:bg-purple-800 text-white p-4 rounded-2xl font-bold text-base shadow-xl shadow-purple-700/20 transition-all transform active:scale-95 cursor-pointer">
                 دخول للمنصة
             </button>
@@ -55,7 +54,6 @@
                 <button type="button" onclick="logoutAdmin()" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer">تسجيل خروج الأدمن</button>
             </div>
 
-            <!-- إضافة كود طالب -->
             <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 space-y-5 shadow-xl">
                 <h2 class="text-sm font-black text-purple-700 border-b border-slate-100 pb-3">إضافة كود طالب جديد (صالح لمدة 30 يوم تلقائياً)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -67,7 +65,6 @@
                 <div id="admin-msg" class="hidden p-3.5 rounded-2xl text-xs font-bold text-center"></div>
             </div>
 
-            <!-- إضافة المحتوى -->
             <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 space-y-5 shadow-xl">
                 <h2 class="text-sm font-black text-purple-700 border-b border-slate-100 pb-3">نشر محاضرة أو ملف جديد</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -93,7 +90,6 @@
                 <div id="content-msg" class="hidden p-3.5 rounded-2xl text-xs font-bold text-center"></div>
             </div>
 
-            <!-- قائمة الطلاب -->
             <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 space-y-5 shadow-xl">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <h2 class="text-sm font-black text-purple-700">سجل الطلاب المشتركين بالنظام</h2>
@@ -217,7 +213,7 @@
         </footer>
     </div>
 
-    <!-- سكربت التشغيل المعزول الفوري -->
+    <!-- سكربت التشغيل عبر روابط CDN المباشرة المطابقة لمشروعك -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc, getDocs, collection, deleteDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -251,4 +247,5 @@
 
         async function verifyAndLoginStudent(code, isAuto) {
             try {
-   
+                if(!isAuto) showMessage("جاري التحقق من صلاحية الكود...", "success");
+                const docRef = doc(db, "students", code
