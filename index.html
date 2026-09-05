@@ -3,102 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة سنتر التفوق - الأحياء</title>
+    <title>سنتر التفوق - للأحياء</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         body { font-family: 'Cairo', sans-serif; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-50 via-white to-purple-100 text-slate-800 flex flex-col min-h-screen">
+<body class="bg-slate-950 text-slate-100 flex flex-col min-h-screen selection:bg-purple-500 selection:text-white">
 
-    <!-- 1. شاشة تسجيل الدخول الموحدة -->
-    <div id="login-screen" class="fixed inset-0 bg-white/95 backdrop-blur-md flex items-center justify-center p-4 z-50">
-        <div class="bg-white p-8 rounded-3xl shadow-2xl text-center max-w-md w-full border border-purple-100 space-y-4">
-            <div class="w-16 h-16 bg-purple-100 text-purple-700 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">
+    <!-- 1. شاشة تسجيل الدخول -->
+    <div id="login-screen" class="fixed inset-0 bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4 z-50 animate-fade">
+        <div class="bg-slate-900 p-8 rounded-3xl shadow-2xl text-center max-w-md w-full border border-slate-800 space-y-6 relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-purple-600/10 rounded-full blur-2xl"></div>
+            
+            <div class="w-16 h-16 bg-purple-950 text-purple-400 border border-purple-800/50 rounded-2xl mx-auto flex items-center justify-center text-2xl shadow-inner">
                 🧬
             </div>
-            <h1 class="text-2xl font-black text-purple-950">سنتر التفوق للأحياء</h1>
-            <p class="text-slate-500 text-sm">أدخل كود الطالب أو باسورد الأدمن للمتابعة</p>
             
-            <input type="text" id="student-code-input" placeholder="أدخل الكود هنا..." class="w-full bg-slate-50 border-2 border-purple-100 focus:border-purple-600 focus:outline-none p-4 rounded-2xl text-center font-bold text-lg text-slate-800 transition-all shadow-sm">
+            <div class="space-y-2">
+                <h1 class="text-2xl font-black text-white tracking-wide">سنتر التفوق للأحياء</h1>
+                <p class="text-slate-400 text-xs">أدخل كود الطالب أو كلمة مرور الأدمن للمتابعة</p>
+            </div>
             
-            <button onclick="handleLogin()" class="w-full bg-purple-700 hover:bg-purple-800 text-white p-4 rounded-2xl font-bold text-lg shadow-lg shadow-purple-700/25 transition-all cursor-pointer">
+            <input type="text" id="student-code-input" placeholder="أدخل الكود هنا..." class="w-full bg-slate-950 border border-slate-800 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 focus:outline-none p-4 rounded-2xl text-center font-bold text-lg text-white transition-all shadow-inner">
+            
+            <button onclick="handleLogin()" class="w-full bg-purple-600 hover:bg-purple-500 text-white p-4 rounded-2xl font-bold text-base shadow-lg shadow-purple-600/20 transition-all transform active:scale-95 cursor-pointer">
                 دخول للمنصة
             </button>
             
-            <div id="login-msg-box" class="hidden p-4 rounded-2xl text-sm font-bold shadow-sm transition-all"></div>
+            <div id="login-msg-box" class="hidden p-4 rounded-2xl text-xs font-bold transition-all animate-fade"></div>
         </div>
     </div>
 
     <!-- 2. لوحة تحكم الأدمن -->
-    <div id="admin-dashboard" class="hidden min-h-screen bg-slate-950 text-slate-100 p-4 md:p-8 space-y-8">
+    <div id="admin-dashboard" class="hidden min-h-screen bg-slate-950 text-slate-100 p-4 md:p-8 space-y-8 animate-fade">
         <div class="max-w-4xl mx-auto space-y-8">
-            <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 flex justify-between items-center shadow-xl">
+            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 flex justify-between items-center shadow-xl">
                 <div>
-                    <h1 class="text-2xl font-black text-white">🔐 لوحة تحكم الأدمن</h1>
-                    <p class="text-purple-300 text-xs mt-1">إدارة الأكواد وإضافة المحتوى والملفات</p>
+                    <h1 class="text-xl md:text-2xl font-black text-white">لوحة تحكم الأدمن</h1>
+                    <p class="text-purple-400 text-xs mt-1">إدارة الأكواد والمحتوى التعليمي</p>
                 </div>
-                <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer">تسجيل خروج الأدمن</button>
+                <button onclick="logoutAdmin()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-4 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer">تسجيل خروج</button>
             </div>
 
             <!-- إضافة كود طالب -->
-            <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 space-y-4">
-                <h2 class="text-lg font-black text-purple-200 border-b border-white/10 pb-3">➕ إضافة كود طالب جديد</h2>
+            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4 shadow-xl">
+                <h2 class="text-sm font-black text-purple-300 border-b border-slate-800 pb-3">إضافة كود طالب جديد</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <input type="text" id="new-student-name" placeholder="اسم الطالب" class="bg-slate-900 border border-white/20 p-3 rounded-2xl text-sm text-white focus:outline-none">
-                    <input type="text" id="new-student-code" placeholder="الكود (كلمة السر)" class="bg-slate-900 border border-white/20 p-3 rounded-2xl text-sm text-white focus:outline-none">
-                    <input type="number" id="new-student-days" value="30" placeholder="الأيام" class="bg-slate-900 border border-white/20 p-3 rounded-2xl text-sm text-white focus:outline-none">
+                    <input type="text" id="new-student-name" placeholder="اسم الطالب" class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
+                    <input type="text" id="new-student-code" placeholder="الكود التعريفي" class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
+                    <input type="number" id="new-student-days" value="30" placeholder="مدة الأيام" class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
                 </div>
-                <button onclick="addNewStudent()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold p-3.5 rounded-2xl text-sm shadow-lg cursor-pointer">حفظ كود الطالب</button>
+                <button onclick="addNewStudent()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-3.5 rounded-2xl text-xs shadow-lg shadow-emerald-600/15 transition-all cursor-pointer">حفظ كود الطالب</button>
                 <div id="admin-msg" class="hidden p-3 rounded-2xl text-xs font-bold text-center"></div>
             </div>
 
             <!-- إضافة المحتوى -->
-            <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 space-y-4">
-                <h2 class="text-lg font-black text-purple-200 border-b border-white/10 pb-3">📂 إضافة محاضرة / واجب / ملف جديد</h2>
+            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4 shadow-xl">
+                <h2 class="text-sm font-black text-purple-300 border-b border-slate-800 pb-3">إضافة محاضرة أو ملف جديد</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs text-purple-300 font-bold mb-2">اختر القسم:</label>
-                        <select id="content-section" class="w-full bg-slate-900 border border-white/20 p-3 rounded-2xl text-sm text-white focus:outline-none">
-                            <option value="lectures">📚 المحاضرات والشرح</option>
-                            <option value="homework">📝 الواجبات المنزلية</option>
-                            <option value="questions">💡 بنك الأسئلة التدريبي</option>
-                            <option value="exams">⏱️ الامتحانات</option>
+                        <label class="block text-xs text-slate-400 font-bold mb-2">اختر القسم:</label>
+                        <select id="content-section" class="w-full bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
+                            <option value="lectures">المحاضرات والشرح</option>
+                            <option value="homework">الواجبات المنزلية</option>
+                            <option value="questions">بنك الأسئلة التدريبي</option>
+                            <option value="exams">الامتحانات الشاملة</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs text-purple-300 font-bold mb-2">عنوان المحتوى / الدرس:</label>
-                        <input type="text" id="content-title" placeholder="مثال: شرح الدعامة الفسيولوجية" class="w-full bg-slate-900 border border-white/20 p-3 rounded-2xl text-sm text-white focus:outline-none">
+                        <label class="block text-xs text-slate-400 font-bold mb-2">عنوان المحتوى:</label>
+                        <input type="text" id="content-title" placeholder="مثال: الدعامة في النبات" class="w-full bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs text-purple-300 font-bold mb-2">رابط الملف:</label>
-                    <input type="text" id="content-url" placeholder="https://..." class="w-full bg-slate-900 border border-white/20 p-3 rounded-2xl text-sm text-white focus:outline-none">
+                    <label class="block text-xs text-slate-400 font-bold mb-2">رابط الملف أو الفيديو:</label>
+                    <input type="text" id="content-url" placeholder="https://..." class="w-full bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
                 </div>
-                <button onclick="addNewContent()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold p-3.5 rounded-2xl text-sm shadow-lg cursor-pointer">نشر المحتوى للمنصة فوراً</button>
+                <button onclick="addNewContent()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold p-3.5 rounded-2xl text-xs shadow-lg shadow-purple-600/15 transition-all cursor-pointer">نشر المحتوى للمنصة</button>
                 <div id="content-msg" class="hidden p-3 rounded-2xl text-xs font-bold text-center"></div>
             </div>
 
             <!-- قائمة الطلاب -->
-            <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 space-y-4">
-                <div class="flex justify-between items-center border-b border-white/10 pb-3">
-                    <h2 class="text-lg font-black text-purple-200">📋 الطلاب المسجلين</h2>
-                    <button onclick="loadStudentsList()" class="text-xs bg-white/20 px-3 py-1.5 rounded-xl cursor-pointer">🔄 تحديث</button>
+            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4 shadow-xl">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                    <h2 class="text-sm font-black text-purple-300">سجل الطلاب المشتركين</h2>
+                    <button onclick="loadStudentsList()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-xl transition-all cursor-pointer">تحديث القائمة</button>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-right text-xs">
                         <thead>
-                            <tr class="text-purple-300 border-b border-white/10">
-                                <th class="p-3">الاسم</th>
-                                <th class="p-3">الكود</th>
-                                <th class="p-3">الانتهاء</th>
-                                <th class="p-3">الجهاز</th>
-                                <th class="p-3 text-center">إجراء</th>
+                            <tr class="text-slate-400 border-b border-slate-800">
+                                <th class="p-3 font-semibold">الاسم</th>
+                                <th class="p-3 font-semibold">الكود</th>
+                                <th class="p-3 font-semibold">الانتهاء</th>
+                                <th class="p-3 font-semibold">الحالة</th>
+                                <th class="p-3 text-center font-semibold">الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody id="students-table-body" class="divide-y divide-white/5">
-                            <tr><td colspan="5" class="p-4 text-center text-slate-400">جاري التحميل...</td></tr>
+                        <tbody id="students-table-body" class="divide-y divide-slate-800/50">
+                            <tr><td colspan="5" class="p-4 text-center text-slate-500">جاري التحميل...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -107,73 +119,74 @@
     </div>
 
     <!-- 3. واجهة الطالب الأساسية -->
-    <div id="student-dashboard" class="hidden flex-col min-h-screen">
-        <header class="bg-white/80 backdrop-blur-md border-b border-purple-100 p-4 sticky top-0 z-40 flex justify-between items-center shadow-xs">
-            <button id="menu-btn" class="text-purple-900 hover:bg-purple-50 p-2.5 rounded-2xl text-xl font-bold transition-all cursor-pointer">☰</button>
+    <div id="student-dashboard" class="hidden flex-col min-h-screen animate-fade">
+        <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 p-4 sticky top-0 z-40 flex justify-between items-center shadow-sm">
+            <button id="menu-btn" class="text-slate-300 hover:bg-slate-800 p-2.5 rounded-2xl text-base font-bold transition-all cursor-pointer">☰</button>
             <div class="text-center">
-                <h2 class="text-base font-black text-purple-900 tracking-wide">سنتر التفوق للأحياء</h2>
-                <p id="header-student-name" class="text-xs text-slate-500 font-semibold mt-0.5">البطل: جاري التحميل...</p>
+                <h2 class="text-sm font-black text-white tracking-wide">سنتر التفوق للأحياء</h2>
+                <p id="header-student-name" class="text-[11px] text-purple-400 font-semibold mt-0.5">البطل: جاري التحميل...</p>
             </div>
-            <button onclick="logoutStudent()" class="text-red-500 hover:bg-red-50 p-2 rounded-xl text-xs font-bold cursor-pointer">خروج</button>
+            <button onclick="logoutStudent()" class="text-red-400 hover:bg-red-500/10 p-2 rounded-xl text-xs font-bold transition-all cursor-pointer">خروج</button>
         </header>
 
         <!-- القائمة الجانبية -->
-        <div id="side-menu" class="fixed inset-y-0 right-0 w-72 bg-white border-l border-purple-100 p-6 shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col justify-between">
+        <div id="side-menu" class="fixed inset-y-0 right-0 w-72 bg-slate-900 border-l border-slate-800 p-6 shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col justify-between">
             <div>
-                <div class="flex justify-between items-center mb-6 border-b border-purple-50 pb-4">
-                    <h3 class="font-black text-purple-950 text-lg">أقسام المنصة</h3>
-                    <button id="close-menu" class="text-slate-400 hover:text-red-500 text-xl font-bold cursor-pointer">✕</button>
+                <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                    <h3 class="font-black text-white text-base">قائمة الأقسام</h3>
+                    <button id="close-menu" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
                 </div>
-                <ul class="space-y-2.5 font-bold text-sm">
-                    <li><a href="#" onclick="openSection('lectures'); closeMenu();" class="flex items-center gap-3 p-3 rounded-2xl bg-purple-50/50 hover:bg-purple-100 text-purple-950">📚 المحاضرات والشرح</a></li>
-                    <li><a href="#" onclick="openSection('homework'); closeMenu();" class="flex items-center gap-3 p-3 rounded-2xl bg-purple-50/50 hover:bg-purple-100 text-purple-950">📝 الواجبات المنزلية</a></li>
-                    <li><a href="#" onclick="openSection('questions'); closeMenu();" class="flex items-center gap-3 p-3 rounded-2xl bg-purple-50/50 hover:bg-purple-100 text-purple-950">💡 بنك الأسئلة التدريبي</a></li>
-                    <li><a href="#" onclick="openSection('exams'); closeMenu();" class="flex items-center gap-3 p-3 rounded-2xl bg-purple-50/50 hover:bg-purple-100 text-purple-950">⏱️ الامتحانات الشاملة</a></li>
+                <ul class="space-y-2 font-bold text-xs">
+                    <li><a href="#" onclick="openSection('lectures'); closeMenu();" class="flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 hover:bg-purple-600/20 text-slate-200 transition-all">المحاضرات والشرح</a></li>
+                    <li><a href="#" onclick="openSection('homework'); closeMenu();" class="flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 hover:bg-blue-600/20 text-slate-200 transition-all">الواجبات المنزلية</a></li>
+                    <li><a href="#" onclick="openSection('questions'); closeMenu();" class="flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 hover:bg-amber-600/20 text-slate-200 transition-all">بنك الأسئلة التدريبي</a></li>
+                    <li><a href="#" onclick="openSection('exams'); closeMenu();" class="flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 hover:bg-emerald-600/20 text-slate-200 transition-all">الامتحانات الشاملة</a></li>
                 </ul>
             </div>
-            <div class="text-center text-xs text-slate-400 border-t border-purple-50 pt-4">سنتر التفوق © 2026</div>
+            <div class="text-center text-[11px] text-slate-500 border-t border-slate-800 pt-4">سنتر التفوق © 2026</div>
         </div>
-        <div id="menu-overlay" class="fixed inset-0 bg-purple-950/20 backdrop-blur-xs hidden z-40"></div>
+        <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden z-40 transition-all"></div>
 
         <!-- المحتوى الرئيسي -->
         <main class="flex-1 max-w-4xl w-full mx-auto p-6 flex flex-col justify-center items-center">
-            <div id="home-view" class="w-full text-center space-y-8">
-                <div class="bg-white p-6 rounded-3xl border border-purple-100 shadow-sm">
-                    <h3 class="text-xl font-black text-purple-950 mb-1">أهلاً بك يا بطل في منصتك التعليمية 🚀</h3>
-                    <p class="text-slate-500 text-xs">اختر القسم الذي تريد البدء فيه:</p>
+            <div id="home-view" class="w-full text-center space-y-8 animate-fade">
+                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-blue-600/5"></div>
+                    <h3 class="text-xl font-black text-white mb-2 relative z-10">أهلاً بك يا بطل في منصتك التعليمية</h3>
+                    <p class="text-slate-400 text-xs relative z-10">اختر القسم الذي تريد البدء في مذاكرته الآن:</p>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6 justify-items-center">
-                    <div onclick="openSection('lectures')" class="flex flex-col items-center cursor-pointer group">
-                        <div class="w-24 h-24 bg-white group-hover:bg-purple-700 border-2 border-purple-100 text-purple-700 group-hover:text-white rounded-full flex items-center justify-center text-3xl shadow-md transition-all">📚</div>
-                        <span class="font-bold text-slate-700 text-sm mt-3">المحاضرات</span>
+                    <div onclick="openSection('lectures')" class="flex flex-col items-center cursor-pointer group transform hover:-translate-y-1 transition-all">
+                        <div class="w-20 h-20 bg-slate-900 group-hover:bg-purple-600 border border-slate-800 group-hover:border-purple-500 text-purple-400 group-hover:text-white rounded-3xl flex items-center justify-center text-2xl shadow-lg transition-all">📚</div>
+                        <span class="font-bold text-slate-300 text-xs mt-3">المحاضرات</span>
                     </div>
-                    <div onclick="openSection('homework')" class="flex flex-col items-center cursor-pointer group">
-                        <div class="w-24 h-24 bg-white group-hover:bg-blue-600 border-2 border-blue-100 text-blue-600 group-hover:text-white rounded-full flex items-center justify-center text-3xl shadow-md transition-all">📝</div>
-                        <span class="font-bold text-slate-700 text-sm mt-3">الواجبات</span>
+                    <div onclick="openSection('homework')" class="flex flex-col items-center cursor-pointer group transform hover:-translate-y-1 transition-all">
+                        <div class="w-20 h-20 bg-slate-900 group-hover:bg-blue-600 border border-slate-800 group-hover:border-blue-500 text-blue-400 group-hover:text-white rounded-3xl flex items-center justify-center text-2xl shadow-lg transition-all">📝</div>
+                        <span class="font-bold text-slate-300 text-xs mt-3">الواجبات</span>
                     </div>
-                    <div onclick="openSection('questions')" class="flex flex-col items-center cursor-pointer group">
-                        <div class="w-24 h-24 bg-white group-hover:bg-amber-600 border-2 border-amber-100 text-amber-600 group-hover:text-white rounded-full flex items-center justify-center text-3xl shadow-md transition-all">💡</div>
-                        <span class="font-bold text-slate-700 text-sm mt-3">بنك الأسئلة</span>
+                    <div onclick="openSection('questions')" class="flex flex-col items-center cursor-pointer group transform hover:-translate-y-1 transition-all">
+                        <div class="w-20 h-20 bg-slate-900 group-hover:bg-amber-600 border border-slate-800 group-hover:border-amber-500 text-amber-400 group-hover:text-white rounded-3xl flex items-center justify-center text-2xl shadow-lg transition-all">💡</div>
+                        <span class="font-bold text-slate-300 text-xs mt-3">بنك الأسئلة</span>
                     </div>
-                    <div onclick="openSection('exams')" class="flex flex-col items-center cursor-pointer group">
-                        <div class="w-24 h-24 bg-white group-hover:bg-emerald-600 border-2 border-emerald-100 text-emerald-600 group-hover:text-white rounded-full flex items-center justify-center text-3xl shadow-md transition-all">⏱️</div>
-                        <span class="font-bold text-slate-700 text-sm mt-3">الامتحانات</span>
+                    <div onclick="openSection('exams')" class="flex flex-col items-center cursor-pointer group transform hover:-translate-y-1 transition-all">
+                        <div class="w-20 h-20 bg-slate-900 group-hover:bg-emerald-600 border border-slate-800 group-hover:border-emerald-500 text-emerald-400 group-hover:text-white rounded-3xl flex items-center justify-center text-2xl shadow-lg transition-all">⏱️</div>
+                        <span class="font-bold text-slate-300 text-xs mt-3">الامتحانات</span>
                     </div>
                 </div>
             </div>
 
             <!-- الشاشة الفرعية لعرض المحتوى -->
-            <div id="sub-view" class="hidden w-full bg-white border border-purple-100 p-6 rounded-3xl shadow-xl space-y-4">
-                <div class="flex justify-between items-center mb-4 pb-3 border-b border-purple-50">
-                    <h3 id="sub-title" class="text-lg font-black text-purple-950">عنوان القسم</h3>
-                    <button onclick="goHome()" class="bg-purple-50 hover:bg-purple-100 text-purple-700 px-4 py-2 rounded-2xl text-xs font-bold cursor-pointer">⬅ العودة للرئيسية</button>
+            <div id="sub-view" class="hidden w-full bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl space-y-4 animate-fade">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+                    <h3 id="sub-title" class="text-base font-black text-white">عنوان القسم</h3>
+                    <button onclick="goHome()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer">العودة للرئيسية</button>
                 </div>
                 <div id="sub-content" class="space-y-3 min-h-[250px]"></div>
             </div>
         </main>
         
-        <footer class="bg-white/80 backdrop-blur-md border-t border-purple-100 py-4 text-center text-xs text-slate-400 font-semibold">
+        <footer class="bg-slate-900/80 backdrop-blur-md border-t border-slate-800 py-4 text-center text-xs text-slate-500 font-semibold">
             جميع الحقوق محفوظة © سنتر التفوق للعلوم 2026
         </footer>
     </div>
@@ -211,9 +224,9 @@
         function showMessage(text, type = 'error') {
             msgBox.classList.remove('hidden');
             if(type === 'error') {
-                msgBox.className = "p-4 rounded-2xl text-sm font-bold shadow-sm bg-red-50 text-red-600 border border-red-100";
+                msgBox.className = "p-4 rounded-2xl text-xs font-bold shadow-sm bg-red-500/10 text-red-400 border border-red-500/20";
             } else {
-                msgBox.className = "p-4 rounded-2xl text-sm font-bold shadow-sm bg-emerald-50 text-emerald-700 border border-emerald-100";
+                msgBox.className = "p-4 rounded-2xl text-xs font-bold shadow-sm bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
             }
             msgBox.innerText = text;
         }
@@ -239,12 +252,12 @@
             msgBox.classList.add('hidden');
 
             if (!val) {
-                showMessage("برجاء كتابة الكود أو الباسورد أولاً!", "error");
+                showMessage("برجاء كتابة الكود أولاً!", "error");
                 return;
             }
 
             if (val === ADMIN_SECRET_PASS) {
-                showMessage("🔐 أهلاً بك يا أدمن، جاري فتح لوحة التحكم...", "success");
+                showMessage("أهلاً بك يا أدمن، جاري فتح لوحة التحكم...", "success");
                 localStorage.setItem('is_admin_logged', 'true');
                 setTimeout(() => {
                     loginScreen.classList.add('hidden');
@@ -288,212 +301,6 @@
                     headerStudentName.innerText = `البطل: ${data.name}`;
                     
                     if(!isAuto) {
-                        showMessage(`🎉 أهلاً بك يا بطل (${data.name})، تم تسجيل الدخول بنجاح!`, "success");
+                        showMessage(`أهلاً بك يا بطل (${data.name})، تم تسجيل الدخول بنجاح!`, "success");
                         setTimeout(() => {
-                            loginScreen.classList.add('hidden');
-                            studentDashboard.classList.remove('hidden');
-                            studentDashboard.classList.add('flex');
-                        }, 800);
-                    } else {
-                        loginScreen.classList.add('hidden');
-                        studentDashboard.classList.remove('hidden');
-                        studentDashboard.classList.add('flex');
-                    }
-                } else {
-                    if (!isAuto) {
-                        showMessage("الكود غير موجود بالنظام، تأكد من الكود المدخل!", "error");
-                    }
-                }
-            } catch (e) {
-                console.error("Firebase Login Error:", e);
-                if (!isAuto) {
-                    showMessage("حدث خطأ في الاتصال، تأكد من الإنترنت.", "error");
-                }
-            }
-        }
-
-        window.logoutAdmin = function() {
-            localStorage.removeItem('is_admin_logged');
-            location.reload();
-        };
-
-        window.logoutStudent = function() {
-            localStorage.removeItem('logged_student_code');
-            location.reload();
-        };
-
-        window.addNewStudent = async function() {
-            const name = document.getElementById('new-student-name').value.trim();
-            const code = document.getElementById('new-student-code').value.trim();
-            const days = parseInt(document.getElementById('new-student-days').value) || 30;
-            const msg = document.getElementById('admin-msg');
-
-            if (!name || !code) {
-                msg.innerText = "أدخل الاسم والكود!";
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-900/50 text-red-200 border border-red-700";
-                msg.classList.remove('hidden');
-                return;
-            }
-
-            const expiry = new Date();
-            expiry.setDate(expiry.getDate() + days);
-
-            try {
-                await setDoc(doc(db, "students", code), {
-                    name, code, expiryDate: expiry.toISOString(), deviceId: "", createdAt: new Date().toISOString()
-                });
-                msg.innerText = "✅ تمت إضافة الطالب بنجاح!";
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-emerald-900/50 text-emerald-200 border border-emerald-700";
-                msg.classList.remove('hidden');
-                loadStudentsList();
-            } catch(e) {
-                console.error(e);
-                msg.innerText = "❌ حدث خطأ أثناء الحفظ.";
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-900/50 text-red-200 border border-red-700";
-                msg.classList.remove('hidden');
-            }
-        };
-
-        window.addNewContent = async function() {
-            const section = document.getElementById('content-section').value;
-            const title = document.getElementById('content-title').value.trim();
-            const url = document.getElementById('content-url').value.trim();
-            const msg = document.getElementById('content-msg');
-
-            if (!title || !url) {
-                msg.innerText = "أدخل عنوان ورابط الملف!";
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-900/50 text-red-200 border border-red-700";
-                msg.classList.remove('hidden');
-                return;
-            }
-
-            try {
-                await addDoc(collection(db, "contents"), {
-                    section, title, url, createdAt: new Date().toISOString()
-                });
-                msg.innerText = "✅ تم نشر المحتوى بنجاح!";
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-emerald-900/50 text-emerald-200 border border-emerald-700";
-                msg.classList.remove('hidden');
-                document.getElementById('content-title').value = "";
-                document.getElementById('content-url').value = "";
-            } catch(e) {
-                console.error(e);
-                msg.innerText = "❌ خطأ في الحفظ.";
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-900/50 text-red-200 border border-red-700";
-                msg.classList.remove('hidden');
-            }
-        };
-
-        window.loadStudentsList = async function() {
-            const tbody = document.getElementById('students-table-body');
-            tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">جاري التحديث...</td></tr>`;
-            try {
-                const snap = await getDocs(collection(db, "students"));
-                if (snap.empty) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">لا توجد أكواد مضافة حتى الآن.</td></tr>`;
-                    return;
-                }
-                let html = "";
-                snap.forEach(d => {
-                    const data = d.data();
-                    const expiry = data.expiryDate ? new Date(data.expiryDate).toLocaleDateString('ar-EG') : "";
-                    const linked = data.deviceId ? '<span class="text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded">مربوط</span>' : '<span class="text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded">متاح</span>';
-                    html += `
-                        <tr class="hover:bg-white/5">
-                            <td class="p-3 font-bold">${data.name}</td>
-                            <td class="p-3 font-mono text-purple-300">${data.code}</td>
-                            <td class="p-3">${expiry}</td>
-                            <td class="p-3">${linked}</td>
-                            <td class="p-3 text-center space-x-2 space-x-reverse">
-                                <button onclick="resetDev('${d.id}')" class="bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded text-[10px] cursor-pointer">فك الجهاز</button>
-                                <button onclick="delStud('${d.id}')" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-[10px] cursor-pointer">حذف</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-                tbody.innerHTML = html;
-            } catch(e) {
-                console.error(e);
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-400">فشل تحميل الأكواد.</td></tr>`;
-            }
-        };
-
-        window.resetDev = async function(id) {
-            if(confirm("هل تريد فك ربط جهاز هذا الطالب؟")) {
-                await updateDoc(doc(db, "students", id), { deviceId: "" });
-                loadStudentsList();
-            }
-        };
-
-        window.delStud = async function(id) {
-            if(confirm("هل تريد حذف هذا الطالب نهائياً؟")) {
-                await deleteDoc(doc(db, "students", id));
-                loadStudentsList();
-            }
-        };
-
-        const homeView = document.getElementById('home-view');
-        const subView = document.getElementById('sub-view');
-        const subTitle = document.getElementById('sub-title');
-        const subContent = document.getElementById('sub-content');
-
-        window.openSection = async function(type) {
-            homeView.classList.add('hidden');
-            subView.classList.remove('hidden');
-
-            let titles = {
-                'lectures': '📚 المحاضرات والشرح الأساسي',
-                'homework': '📝 الواجبات المنزلية',
-                'questions': '💡 بنك الأسئلة التدريبي',
-                'exams': '⏱️ الامتحانات الشاملة'
-            };
-            subTitle.innerText = titles[type] || 'محتوى المنصة';
-            subContent.innerHTML = `<p class="text-center text-slate-400 py-6">جاري جلب المحتوى...</p>`;
-
-            try {
-                const snap = await getDocs(collection(db, "contents"));
-                let html = "";
-                snap.forEach(docSnap => {
-                    const item = docSnap.data();
-                    if(item.section === type) {
-                        html += `
-                            <div class="p-4 bg-purple-50 rounded-2xl border border-purple-100 flex justify-between items-center">
-                                <div>
-                                    <h4 class="font-bold text-purple-950 text-sm">${item.title}</h4>
-                                    <p class="text-slate-500 text-xs mt-1">محتوى تعليمي معتمد من السنتر</p>
-                                </div>
-                                <a href="${item.url}" target="_blank" class="bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xs transition-all">فتح الملف / الشرح</a>
-                            </div>
-                        `;
-                    }
-                });
-
-                if(!html) {
-                    html = `<p class="text-center text-slate-400 py-8">لا توجد ملفات أو محاضرات مضافة في هذا القسم حتى الآن.</p>`;
-                }
-                subContent.innerHTML = html;
-            } catch(e) {
-                subContent.innerHTML = `<p class="text-center text-red-500 py-4">حدث خطأ في تحميل المحتوى.</p>`;
-            }
-        };
-
-        window.goHome = function() {
-            subView.classList.add('hidden');
-            homeView.classList.remove('hidden');
-        };
-
-        const sideMenu = document.getElementById('side-menu');
-        const menuOverlay = document.getElementById('menu-overlay');
-        document.getElementById('menu-btn').addEventListener('click', () => {
-            sideMenu.classList.remove('translate-x-full');
-            menuOverlay.classList.remove('hidden');
-        });
-        window.closeMenu = function() {
-            sideMenu.classList.add('translate-x-full');
-            menuOverlay.classList.add('hidden');
-        };
-        document.getElementById('close-menu').addEventListener('click', closeMenu);
-        menuOverlay.addEventListener('click', closeMenu);
-    </script>
-</body>
-</html>
+                            loginScree
