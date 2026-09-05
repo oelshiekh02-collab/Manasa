@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سنتر التفوق - للأحياء</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- استدعاء فايربيس بالطريقة المستقرة للبراوزر (بدون مشاكل Modules) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
     <style>
         * { box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; color: #0f172a; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
@@ -108,7 +113,7 @@
         </div>
     </div>
 
-    <!-- 3. واجهة الطالب (القائمة الرئيسية للأقسام) -->
+    <!-- 3. واجهة الطالب -->
     <div id="student-dashboard" class="container hidden animate-fade" style="max-width: 800px;">
         <div class="header-flex">
             <div>
@@ -183,11 +188,8 @@
         </div>
     </div>
 
-    <!-- جافاسكريبت فايربيس -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc, getDocs, collection, deleteDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
+    <!-- السكريبت المتوافق 100% -->
+    <script>
         const firebaseConfig = {
             apiKey: "AIzaSyDp3uu1IFemjPjdHYMMH9vtz4Sr1SCaz9o",
             authDomain: "altafawuk-c93b4.firebaseapp.com",
@@ -197,8 +199,9 @@
             appId: "1:682035204936:web:766a346a441754b76d197d"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        // تهيئة فايربيس بالطريقة المستقرة
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
         const ADMIN_PASS = "Omar2009";
         let currentActiveSection = '';
 
@@ -209,7 +212,7 @@
             el.classList.remove('hidden');
         }
 
-        window.handleLogin = async function() {
+        async function handleLogin() {
             const val = document.getElementById('code-input').value.trim();
             if (!val) {
                 showMsg('login-msg', 'برجاء كتابة الكود أولاً!', 'error');
@@ -229,9 +232,9 @@
 
             showMsg('login-msg', 'جاري التحقق من الكود...', 'success');
             try {
-                const snap = await getDoc(doc(db, "students", val));
-                if (snap.exists()) {
-                    const data = snap.data();
+                const docRef = await db.collection("students").doc(val).get();
+                if (docRef.exists) {
+                    const data = docRef.data();
                     localStorage.setItem('student_name', data.name);
                     showMsg('login-msg', `أهلاً بك يا بطل (${data.name})`, 'success');
                     setTimeout(() => {
@@ -245,24 +248,24 @@
             } catch (e) {
                 showMsg('login-msg', 'خطأ في الاتصال بالشبكة أو القاعدة', 'error');
             }
-        };
+        }
 
-        window.logout = function() {
+        function logout() {
             localStorage.clear();
             location.reload();
-        };
+        }
 
-        window.loadStudents = async function() {
+        async function loadStudents() {
             const tbody = document.getElementById('students-table');
             try {
-                const snap = await getDocs(collection(db, "students"));
-                if (snap.empty) {
+                const snapshot = await db.collection("students").get();
+                if (snapshot.empty) {
                     tbody.innerHTML = `<tr><td colspan="5" style="padding: 20px; color: #94a3b8;">لا توجد أكواد مسجلة حتى الآن</td></tr>`;
                     return;
                 }
                 let html = "";
-                snap.forEach(d => {
-                    const item = d.data();
+                snapshot.forEach(docSnap => {
+                    const item = docSnap.data();
                     const dateStr = item.expiryDate ? new Date(item.expiryDate).toLocaleDateString() : '';
                     html += `<tr>
                         <td style="font-weight: 700;">${item.name}</td>
@@ -270,7 +273,7 @@
                         <td>${dateStr}</td>
                         <td><span style="background: #f1f5f9; padding: 4px 10px; border-radius: 8px; font-size: 11px;">${item.deviceId ? 'مربوط بجهاز' : 'متاح'}</span></td>
                         <td>
-                            <button onclick="delStudent('${d.id}')" style="background:#ef4444; padding:5px 12px; font-size:11px; width:auto; box-shadow:none;">حذف</button>
+                            <button onclick="delStudent('${docSnap.id}')" style="background:#ef4444; padding:5px 12px; font-size:11px; width:auto; box-shadow:none;">حذف</button>
                         </td>
                     </tr>`;
                 });
@@ -278,9 +281,9 @@
             } catch(e) {
                 tbody.innerHTML = `<tr><td colspan="5" style="color: #ef4444; padding: 20px;">خطأ في التحميل</td></tr>`;
             }
-        };
+        }
 
-        window.addStudent = async function() {
+        async function addStudent() {
             const name = document.getElementById('new-name').value.trim();
             const code = document.getElementById('new-code').value.trim();
             const days = parseInt(document.getElementById('new-days').value) || 30;
@@ -294,7 +297,7 @@
             expiry.setDate(expiry.getDate() + days);
 
             try {
-                await setDoc(doc(db, "students", code), {
+                await db.collection("students").doc(code).set({
                     name, code, expiryDate: expiry.toISOString(), deviceId: ""
                 });
                 showMsg('admin-msg', 'تمت إضافة الطالب بنجاح', 'success');
@@ -304,16 +307,16 @@
             } catch(e) {
                 showMsg('admin-msg', 'فشل حفظ الطالب', 'error');
             }
-        };
+        }
 
-        window.delStudent = async function(id) {
+        async function delStudent(id) {
             if (confirm("هل تريد حذف هذا الطالب نهائياً؟")) {
-                await deleteDoc(doc(db, "students", id));
+                await db.collection("students").doc(id).delete();
                 loadStudents();
             }
-        };
+        }
 
-        window.addContent = async function() {
+        async function addContent() {
             const section = document.getElementById('content-section').value;
             const title = document.getElementById('content-title').value.trim();
             const url = document.getElementById('content-url').value.trim();
@@ -324,17 +327,16 @@
             }
 
             try {
-                await addDoc(collection(db, "contents"), { section, title, url });
+                await db.collection("contents").add({ section, title, url });
                 showMsg('content-msg', 'تم نشر المحتوى للمنصة بنجاح', 'success');
                 document.getElementById('content-title').value = '';
                 document.getElementById('content-url').value = '';
             } catch(e) {
                 showMsg('content-msg', 'خطأ في النشر', 'error');
             }
-        };
+        }
 
-        // فتح صفحة القسم المتكاملة (مع جلب آمن تماماً بدون أخطاء استعلامات)
-        window.openSectionPage = async function(type) {
+        async function openSectionPage(type) {
             currentActiveSection = type;
             document.getElementById('student-dashboard').classList.add('hidden');
             document.getElementById('section-page').classList.remove('hidden');
@@ -350,11 +352,49 @@
             contentBox.innerHTML = "<p style='text-align:center; color:#94a3b8; padding:50px;'>جاري جلب المحتوى التعليمي...</p>";
 
             try {
-                const snap = await getDocs(collection(db, "contents"));
+                const snapshot = await db.collection("contents").get();
                 let html = "";
-                snap.forEach(d => {
-                    const item = d.data();
-                    // مطابقة محلية آمنة 100%
+                snapshot.forEach(docSnap => {
+                    const item = docSnap.data();
                     if (item.section === type) {
                         html += `
-                            <div style="background
+                            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:18px 22px; border-radius:18px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.02);">
+                                <div><b style="font-size:16px; color:#0f172a;">${item.title}</b></div>
+                                <a href="${item.url}" target="_blank" style="background:#7e22ce; color:white; padding:10px 18px; border-radius:14px; text-decoration:none; font-size:13px; font-weight:700; box-shadow:0 4px 6px rgba(126,34,206,0.2);">فتح المحتوى ↗</a>
+                            </div>
+                        `;
+                    }
+                });
+                contentBox.innerHTML = html || "<p style='text-align:center; color:#94a3b8; padding:60px;'>لا توجد ملفات أو محاضرات مضافة في هذا القسم حالياً.</p>";
+            } catch(e) {
+                contentBox.innerHTML = "<p style='text-align:center; color:#ef4444; padding:30px;'>خطأ في جلب المحتوى من القاعدة.</p>";
+            }
+        }
+
+        function reloadCurrentSection() {
+            if (currentActiveSection) {
+                openSectionPage(currentActiveSection);
+            }
+        }
+
+        function backToDashboard() {
+            document.getElementById('section-page').classList.add('hidden');
+            document.getElementById('student-dashboard').classList.remove('hidden');
+        }
+
+        // التحقق التلقائي عند التحميل
+        window.onload = function() {
+            if (localStorage.getItem('admin_logged') === 'true') {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                loadStudents();
+            } else if (localStorage.getItem('student_name')) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('student-dashboard').classList.remove('hidden');
+                document.getElementById('student-welcome').innerText = `مرحباً بك يا بطل: ${localStorage.getItem('student_name')}`;
+            }
+        };
+    </script>
+
+</body>
+</html>
