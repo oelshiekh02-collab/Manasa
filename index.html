@@ -15,64 +15,64 @@
         .animate-fade { animation: fadeIn 0.4s ease-out forwards; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 flex flex-col min-h-screen selection:bg-purple-500 selection:text-white">
+<body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen selection:bg-purple-600 selection:text-white">
 
     <!-- 1. شاشة تسجيل الدخول -->
-    <div id="login-screen" class="fixed inset-0 bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4 z-50 animate-fade">
-        <div class="bg-slate-900 p-8 rounded-3xl shadow-2xl text-center max-w-md w-full border border-slate-800 space-y-6 relative overflow-hidden">
+    <div id="login-screen" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl text-center max-w-md w-full border border-slate-100 space-y-6 relative overflow-hidden">
             <div class="absolute -top-12 -right-12 w-32 h-32 bg-purple-600/10 rounded-full blur-2xl"></div>
             
-            <div class="w-16 h-16 bg-purple-950 text-purple-400 border border-purple-800/50 rounded-2xl mx-auto flex items-center justify-center text-2xl shadow-inner">
+            <div class="w-16 h-16 bg-purple-100 text-purple-600 border border-purple-200 rounded-2xl mx-auto flex items-center justify-center text-2xl shadow-inner">
                 🧬
             </div>
             
             <div class="space-y-2">
-                <h1 class="text-2xl font-black text-white tracking-wide">سنتر التفوق للأحياء</h1>
-                <p class="text-slate-400 text-xs">أدخل كود الطالب أو كلمة مرور الأدمن للمتابعة</p>
+                <h1 class="text-2xl font-black text-slate-900 tracking-wide">سنتر التفوق للأحياء</h1>
+                <p class="text-slate-500 text-xs">أدخل كود الطالب أو كلمة مرور الأدمن للمتابعة</p>
             </div>
             
-            <input type="text" id="student-code-input" placeholder="أدخل الكود هنا..." class="w-full bg-slate-950 border border-slate-800 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 focus:outline-none p-4 rounded-2xl text-center font-bold text-lg text-white transition-all shadow-inner">
+            <input type="text" id="student-code-input" placeholder="أدخل الكود هنا..." class="w-full bg-slate-50 border border-slate-200 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 focus:outline-none p-4 rounded-2xl text-center font-bold text-lg text-slate-900 transition-all shadow-inner">
             
-            <button id="login-btn" class="w-full bg-purple-600 hover:bg-purple-500 text-white p-4 rounded-2xl font-bold text-base shadow-lg shadow-purple-600/20 transition-all transform active:scale-95 cursor-pointer">
+            <button id="login-btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-2xl font-bold text-base shadow-lg shadow-purple-600/20 transition-all transform active:scale-95 cursor-pointer">
                 دخول للمنصة
             </button>
             
-            <div id="login-msg-box" class="p-4 rounded-2xl text-xs font-bold transition-all animate-fade bg-slate-950 text-purple-400 border border-slate-800">
+            <div id="login-msg-box" class="p-3 rounded-2xl text-xs font-bold transition-all animate-fade bg-purple-50 text-purple-700 border border-purple-100">
                 جاهز للإدخال...
             </div>
         </div>
     </div>
 
     <!-- 2. لوحة تحكم الأدمن -->
-    <div id="admin-dashboard" class="hidden min-h-screen bg-slate-950 text-slate-100 p-4 md:p-8 space-y-8 animate-fade">
+    <div id="admin-dashboard" class="hidden min-h-screen bg-slate-50 text-slate-900 p-4 md:p-8 space-y-8 animate-fade">
         <div class="max-w-4xl mx-auto space-y-8">
-            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 flex justify-between items-center shadow-xl">
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 flex justify-between items-center shadow-xl">
                 <div>
-                    <h1 class="text-xl md:text-2xl font-black text-white">لوحة تحكم الأدمن</h1>
-                    <p class="text-purple-400 text-xs mt-1">إدارة الأكواد والمحتوى التعليمي</p>
+                    <h1 class="text-xl md:text-2xl font-black text-slate-900">لوحة تحكم الأدمن</h1>
+                    <p class="text-purple-600 text-xs mt-1">إدارة الأكواد والمحتوى التعليمي</p>
                 </div>
-                <button id="logout-admin-btn" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-4 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer">تسجيل خروج</button>
+                <button id="logout-admin-btn" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-4 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer">تسجيل خروج</button>
             </div>
 
             <!-- إضافة كود طالب -->
-            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4 shadow-xl">
-                <h2 class="text-sm font-black text-purple-300 border-b border-slate-800 pb-3">إضافة كود طالب جديد</h2>
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 space-y-4 shadow-xl">
+                <h2 class="text-sm font-black text-purple-700 border-b border-slate-100 pb-3">إضافة كود طالب جديد (صالح لمدة 30 يوم)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <input type="text" id="new-student-name" placeholder="اسم الطالب" class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
-                    <input type="text" id="new-student-code" placeholder="الكود التعريفي" class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
-                    <input type="number" id="new-student-days" value="30" placeholder="مدة الأيام" class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
+                    <input type="text" id="new-student-name" placeholder="اسم الطالب" class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-xs text-slate-900 focus:outline-none focus:border-purple-600">
+                    <input type="text" id="new-student-code" placeholder="الكود التعريفي" class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-xs text-slate-900 focus:outline-none focus:border-purple-600">
+                    <input type="number" id="new-student-days" value="30" placeholder="مدة الأيام" class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-xs text-slate-900 focus:outline-none focus:border-purple-600">
                 </div>
-                <button id="add-student-btn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-3.5 rounded-2xl text-xs shadow-lg shadow-emerald-600/15 transition-all cursor-pointer">حفظ كود الطالب</button>
+                <button id="add-student-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold p-3.5 rounded-2xl text-xs shadow-lg shadow-emerald-600/15 transition-all cursor-pointer">حفظ كود الطالب</button>
                 <div id="admin-msg" class="hidden p-3 rounded-2xl text-xs font-bold text-center"></div>
             </div>
 
             <!-- إضافة المحتوى -->
-            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4 shadow-xl">
-                <h2 class="text-sm font-black text-purple-300 border-b border-slate-800 pb-3">إضافة محاضرة أو ملف جديد</h2>
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 space-y-4 shadow-xl">
+                <h2 class="text-sm font-black text-purple-700 border-b border-slate-100 pb-3">إضافة محاضرة أو ملف جديد</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs text-slate-400 font-bold mb-2">اختر القسم:</label>
-                        <select id="content-section" class="w-full bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
+                        <label class="block text-xs text-slate-600 font-bold mb-2">اختر القسم:</label>
+                        <select id="content-section" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-xs text-slate-900 focus:outline-none focus:border-purple-600">
                             <option value="lectures">المحاضرات والشرح</option>
                             <option value="homework">الواجبات المنزلية</option>
                             <option value="questions">بنك الأسئلة التدريبي</option>
@@ -80,28 +80,28 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-400 font-bold mb-2">عنوان المحتوى:</label>
-                        <input type="text" id="content-title" placeholder="مثال: الدعامة في النبات" class="w-full bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
+                        <label class="block text-xs text-slate-600 font-bold mb-2">عنوان المحتوى:</label>
+                        <input type="text" id="content-title" placeholder="مثال: الدعامة في النبات" class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-xs text-slate-900 focus:outline-none focus:border-purple-600">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs text-slate-400 font-bold mb-2">رابط الملف أو الفيديو:</label>
-                    <input type="text" id="content-url" placeholder="https://..." class="w-full bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-xs text-white focus:outline-none focus:border-purple-500">
+                    <label class="block text-xs text-slate-600 font-bold mb-2">رابط الملف أو الفيديو:</label>
+                    <input type="text" id="content-url" placeholder="https://..." class="w-full bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-xs text-slate-900 focus:outline-none focus:border-purple-600">
                 </div>
-                <button id="add-content-btn" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold p-3.5 rounded-2xl text-xs shadow-lg shadow-purple-600/15 transition-all cursor-pointer">نشر المحتوى للمنصة</button>
+                <button id="add-content-btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold p-3.5 rounded-2xl text-xs shadow-lg shadow-purple-600/15 transition-all cursor-pointer">نشر المحتوى للمنصة</button>
                 <div id="content-msg" class="hidden p-3 rounded-2xl text-xs font-bold text-center"></div>
             </div>
 
             <!-- قائمة الطلاب -->
-            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4 shadow-xl">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                    <h2 class="text-sm font-black text-purple-300">سجل الطلاب المشتركين</h2>
-                    <button id="reload-students-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-xl transition-all cursor-pointer">تحديث القائمة</button>
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 space-y-4 shadow-xl">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <h2 class="text-sm font-black text-purple-700">سجل الطلاب المشتركين</h2>
+                    <button id="reload-students-btn" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl transition-all cursor-pointer">تحديث القائمة</button>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-right text-xs">
                         <thead>
-                            <tr class="text-slate-400 border-b border-slate-800">
+                            <tr class="text-slate-500 border-b border-slate-100">
                                 <th class="p-3 font-semibold">الاسم</th>
                                 <th class="p-3 font-semibold">الكود</th>
                                 <th class="p-3 font-semibold">الانتهاء</th>
@@ -109,8 +109,8 @@
                                 <th class="p-3 text-center font-semibold">الإجراءات</th>
                             </tr>
                         </thead>
-                        <tbody id="students-table-body" class="divide-y divide-slate-800/50">
-                            <tr><td colspan="5" class="p-4 text-center text-slate-500">جاري التحميل...</td></tr>
+                        <tbody id="students-table-body" class="divide-y divide-slate-100">
+                            <tr><td colspan="5" class="p-4 text-center text-slate-400">جاري التحميل...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -120,74 +120,86 @@
 
     <!-- 3. واجهة الطالب الأساسية -->
     <div id="student-dashboard" class="hidden flex-col min-h-screen animate-fade">
-        <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 p-4 sticky top-0 z-40 flex justify-between items-center shadow-sm">
-            <button id="menu-btn" class="text-slate-300 hover:bg-slate-800 p-2.5 rounded-2xl text-base font-bold transition-all cursor-pointer">☰</button>
+        <!-- الهيدر باللون البنفسجي الفخم -->
+        <header class="bg-purple-700 text-white border-b border-purple-800 p-4 sticky top-0 z-40 flex justify-between items-center shadow-md">
+            <button id="menu-btn" class="text-white hover:bg-purple-600 p-2.5 rounded-2xl text-base font-bold transition-all cursor-pointer">☰</button>
             <div class="text-center">
-                <h2 class="text-sm font-black text-white tracking-wide">سنتر التفوق للأحياء</h2>
-                <p id="header-student-name" class="text-[11px] text-purple-400 font-semibold mt-0.5">البطل: جاري التحميل...</p>
+                <h2 class="text-sm font-black tracking-wide">سنتر التفوق للأحياء</h2>
+                <p id="header-student-name" class="text-[11px] text-purple-200 font-semibold mt-0.5">البطل: جاري التحميل...</p>
             </div>
-            <button id="logout-student-btn" class="text-red-400 hover:bg-red-500/10 p-2 rounded-xl text-xs font-bold transition-all cursor-pointer">خروج</button>
+            <button id="logout-student-btn" class="text-purple-100 hover:bg-purple-600 p-2 rounded-xl text-xs font-bold transition-all cursor-pointer">خروج</button>
         </header>
 
         <!-- القائمة الجانبية -->
-        <div id="side-menu" class="fixed inset-y-0 right-0 w-72 bg-slate-900 border-l border-slate-800 p-6 shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col justify-between">
+        <div id="side-menu" class="fixed inset-y-0 right-0 w-72 bg-white border-l border-slate-200 p-6 shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col justify-between">
             <div>
-                <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
-                    <h3 class="font-black text-white text-base">قائمة الأقسام</h3>
-                    <button id="close-menu" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
+                <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                    <h3 class="font-black text-slate-900 text-base">قائمة الأقسام</h3>
+                    <button id="close-menu" class="text-slate-400 hover:text-slate-900 text-lg font-bold cursor-pointer">✕</button>
                 </div>
                 <ul class="space-y-2 font-bold text-xs">
-                    <li><a href="#" data-section="lectures" class="nav-link flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 hover:bg-purple-600/20 text-slate-200 transition-all">المحاضرات والشرح</a></li>
-                    <li><a href="#" data-section="homework" class="nav-link flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 hover:bg-blue-600/20 text-slate-200 transition-all">الواجبات المنزلية</a></li>
-                    <li><a href="#" data-section="questions" class="nav-link flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 hover:bg-amber-600/20 text-slate-200 transition-all">بنك الأسئلة التدريبي</a></li>
-                    <li><a href="#" data-section="exams" class="nav-link flex items-center gap-3 p-3 rounded-2xl bg-slate-950/50 hover:bg-emerald-600/20 text-slate-200 transition-all">الامتحانات الشاملة</a></li>
+                    <li><a href="#" data-section="lectures" class="nav-link flex items-center gap-3 p-3 rounded-2xl bg-slate-50 hover:bg-purple-50 text-slate-700 hover:text-purple-700 transition-all">📚 المحاضرات والشرح</a></li>
+                    <li><a href="#" data-section="homework" class="nav-link flex items-center gap-3 p-3 rounded-2xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-all">📝 الواجبات المنزلية</a></li>
+                    <li><a href="#" data-section="questions" class="nav-link flex items-center gap-3 p-3 rounded-2xl bg-slate-50 hover:bg-amber-50 text-slate-700 hover:text-amber-700 transition-all">💡 بنك الأسئلة التدريبي</a></li>
+                    <li><a href="#" data-section="exams" class="nav-link flex items-center gap-3 p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50text-slate-700 hover:text-emerald-700 transition-all">⏱️ الامتحانات الشاملة</a></li>
                 </ul>
             </div>
-            <div class="text-center text-[11px] text-slate-500 border-t border-slate-800 pt-4">سنتر التفوق © 2026</div>
+            <div class="text-center text-[11px] text-slate-400 border-t border-slate-100 pt-4">سنتر التفوق © 2026</div>
         </div>
-        <div id="menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden z-40 transition-all"></div>
+        <div id="menu-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs hidden z-40 transition-all"></div>
 
-        <!-- المحتوى الرئيسي -->
-        <main class="flex-1 max-w-4xl w-full mx-auto p-6 flex flex-col justify-center items-center">
+        <!-- المحتوى الرئيسي (شاشة كاملة) -->
+        <main class="flex-1 w-full max-w-6xl mx-auto p-4 md:p-8 flex flex-col justify-center items-center">
+            
+            <!-- الرئيسية -->
             <div id="home-view" class="w-full text-center space-y-8 animate-fade">
-                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">
+                <div class="bg-white p-8 md:p-12 rounded-3xl border border-slate-200 shadow-xl relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-blue-600/5"></div>
-                    <h3 class="text-xl font-black text-white mb-2 relative z-10">أهلاً بك يا بطل في منصتك التعليمية</h3>
-                    <p class="text-slate-400 text-xs relative z-10">اختر القسم الذي تريد البدء في مذاكرته الآن:</p>
+                    <h3 class="text-2xl md:text-3xl font-black text-slate-900 mb-3 relative z-10">أهلاً بك يا بطل في منصتك التعليمية</h3>
+                    <p class="text-slate-500 text-sm relative z-10">اختر القسم الذي تريد البدء في مذاكرته الآن لتحقيق أعلى الدرجات:</p>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 justify-items-center">
-                    <div class="card-section cursor-pointer group transform hover:-translate-y-1 transition-all" data-section="lectures">
-                        <div class="w-20 h-20 bg-slate-900 group-hover:bg-purple-600 border border-slate-800 group-hover:border-purple-500 text-purple-400 group-hover:text-white rounded-3xl flex items-center justify-center text-2xl shadow-lg transition-all">📚</div>
-                        <span class="font-bold text-slate-300 text-xs mt-3 block text-center">المحاضرات</span>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="card-section bg-white p-6 rounded-3xl border border-slate-200 shadow-md hover:shadow-xl hover:border-purple-300 flex flex-col items-center cursor-pointer group transform hover:-translate-y-1.5 transition-all" data-section="lectures">
+                        <div class="w-16 h-16 bg-purple-50 group-hover:bg-purple-600 text-purple-600 group-hover:text-white rounded-2xl flex items-center justify-center text-2xl transition-all shadow-inner">📚</div>
+                        <span class="font-black text-slate-800 text-sm mt-4">المحاضرات</span>
+                        <p class="text-[11px] text-slate-400 mt-1">شرح مفصل ومبسط</p>
                     </div>
-                    <div class="card-section cursor-pointer group transform hover:-translate-y-1 transition-all" data-section="homework">
-                        <div class="w-20 h-20 bg-slate-900 group-hover:bg-blue-600 border border-slate-800 group-hover:border-blue-500 text-blue-400 group-hover:text-white rounded-3xl flex items-center justify-center text-2xl shadow-lg transition-all">📝</div>
-                        <span class="font-bold text-slate-300 text-xs mt-3 block text-center">الواجبات</span>
+                    <div class="card-section bg-white p-6 rounded-3xl border border-slate-200 shadow-md hover:shadow-xl hover:border-blue-300 flex flex-col items-center cursor-pointer group transform hover:-translate-y-1.5 transition-all" data-section="homework">
+                        <div class="w-16 h-16 bg-blue-50 group-hover:bg-blue-600 text-blue-600 group-hover:text-white rounded-2xl flex items-center justify-center text-2xl transition-all shadow-inner">📝</div>
+                        <span class="font-black text-slate-800 text-sm mt-4">الواجبات</span>
+                        <p class="text-[11px] text-slate-400 mt-1">تدريبات منزلية هامة</p>
                     </div>
-                    <div class="card-section cursor-pointer group transform hover:-translate-y-1 transition-all" data-section="questions">
-                        <div class="w-20 h-20 bg-slate-900 group-hover:bg-amber-600 border border-slate-800 group-hover:border-amber-500 text-amber-400 group-hover:text-white rounded-3xl flex items-center justify-center text-2xl shadow-lg transition-all">💡</div>
-                        <span class="font-bold text-slate-300 text-xs mt-3 block text-center">بنك الأسئلة</span>
+                    <div class="card-section bg-white p-6 rounded-3xl border border-slate-200 shadow-md hover:shadow-xl hover:border-amber-300 flex flex-col items-center cursor-pointer group transform hover:-translate-y-1.5 transition-all" data-section="questions">
+                        <div class="w-16 h-16 bg-amber-50 group-hover:bg-amber-600 text-amber-600 group-hover:text-white rounded-2xl flex items-center justify-center text-2xl transition-all shadow-inner">💡</div>
+                        <span class="font-black text-slate-800 text-sm mt-4">بنك الأسئلة</span>
+                        <p class="text-[11px] text-slate-400 mt-1">أفكار الامتحانات</p>
                     </div>
-                    <div class="card-section cursor-pointer group transform hover:-translate-y-1 transition-all" data-section="exams">
-                        <div class="w-20 h-20 bg-slate-900 group-hover:bg-emerald-600 border border-slate-800 group-hover:border-emerald-500 text-emerald-400 group-hover:text-white rounded-3xl flex items-center justify-center text-2xl shadow-lg transition-all">⏱️</div>
-                        <span class="font-bold text-slate-300 text-xs mt-3 block text-center">الامتحانات</span>
+                    <div class="card-section bg-white p-6 rounded-3xl border border-slate-200 shadow-md hover:shadow-xl hover:border-emerald-300 flex flex-col items-center cursor-pointer group transform hover:-translate-y-1.5 transition-all" data-section="exams">
+                        <div class="w-16 h-16 bg-emerald-50 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-2xl flex items-center justify-center text-2xl transition-all shadow-inner">⏱️</div>
+                        <span class="font-black text-slate-800 text-sm mt-4">الامتحانات</span>
+                        <p class="text-[11px] text-slate-400 mt-1">اختبارات شاملة وتوقيت</p>
                     </div>
                 </div>
             </div>
 
-            <!-- الشاشة الفرعية لعرض المحتوى -->
-            <div id="sub-view" class="hidden w-full bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl space-y-4 animate-fade">
-                <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
-                    <h3 id="sub-title" class="text-base font-black text-white">عنوان القسم</h3>
-                    <button id="go-home-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer">العودة للرئيسية</button>
+            <!-- الشاشة الفرعية (تفتح كشاشة كاملة ومنسقة) -->
+            <div id="sub-view" class="hidden w-full bg-white border border-slate-200 p-6 md:p-8 rounded-3xl shadow-xl space-y-6 animate-fade min-h-[70vh] flex flex-col">
+                <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+                    <div>
+                        <h3 id="sub-title" class="text-xl font-black text-slate-900">عنوان القسم</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">تابع كل محتويات هذا القسم بكل سهولة</p>
+                    </div>
+                    <button id="go-home-btn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer">العودة للرئيسية 🏠</button>
                 </div>
-                <div id="sub-content" class="space-y-3 min-h-[250px]"></div>
+                <div id="sub-content" class="space-y-4 flex-1"></div>
             </div>
         </main>
         
-        <footer class="bg-slate-900/80 backdrop-blur-md border-t border-slate-800 py-4 text-center text-xs text-slate-500 font-semibold">
-            جميع الحقوق محفوظة © سنتر التفوق للعلوم 2026
+        <!-- الفوتر -->
+        <footer class="bg-white border-t border-slate-200 py-6 px-4 text-center text-xs text-slate-500 font-semibold space-y-1 shadow-inner">
+            <p class="font-bold text-slate-700">سنتر التفوق للعلوم - منصة تعليمية متكاملة لبيولوجيا الثانوية العامة</p>
+            <p class="text-slate-400">جميع الحقوق محفوظة لصالح المنصة والأستاذ المشرف © 2026</p>
         </footer>
     </div>
 
@@ -222,8 +234,8 @@
         }
 
         function showMessage(text, type = 'error') {
-            msgBox.className = "p-4 rounded-2xl text-xs font-bold transition-all animate-fade " + 
-                (type === 'error' ? "bg-red-500/10 text-red-400 border border-red-500/20" : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20");
+            msgBox.className = "p-3 rounded-2xl text-xs font-bold transition-all animate-fade " + 
+                (type === 'error' ? "bg-red-50 text-red-600 border border-red-200" : "bg-purple-50 text-purple-700 border border-purple-100");
             msgBox.innerText = text;
         }
 
@@ -272,7 +284,7 @@
 
         async function verifyAndLoginStudent(code, isAuto) {
             try {
-                showMessage("جاري الاتصال بقاعدة البيانات والتحقق...", "success");
+                if(!isAuto) showMessage("جاري التحقق من صلاحية الكود...", "success");
                 const docRef = doc(db, "students", code);
                 const snap = await getDoc(docRef);
                 
@@ -281,8 +293,9 @@
                     const now = new Date();
                     const expiry = data.expiryDate ? new Date(data.expiryDate) : null;
 
+                    // فحص انتهاء الـ 30 يوم بدقة
                     if (expiry && now > expiry) {
-                        if (!isAuto) showMessage("عذراً، انتهت فترة اشتراكك!", "error");
+                        if (!isAuto) showMessage("عذراً، انتهت فترة اشتراكك (30 يوم). يرجى التواصل للتجديد!", "error");
                         localStorage.removeItem('logged_student_code');
                         return;
                     }
@@ -297,18 +310,18 @@
                     localStorage.setItem('logged_student_code', code);
                     headerStudentName.innerText = `البطل: ${data.name}`;
                     
-                    showMessage(`أهلاً بك يا بطل (${data.name})، تم تسجيل الدخول!`, "success");
+                    if(!isAuto) showMessage(`أهلاً بك يا بطل (${data.name})، تم تسجيل الدخول بنجاح!`, "success");
                     setTimeout(() => {
                         loginScreen.classList.add('hidden');
                         studentDashboard.classList.remove('hidden');
                         studentDashboard.classList.add('flex');
                     }, 800);
                 } else {
-                    if (!isAuto) showMessage("الكود غير موجود في قاعدة البيانات!", "error");
+                    if (!isAuto) showMessage("الكود غير موجود بالنظام، تأكد من الكود المدخل!", "error");
                 }
             } catch (e) {
                 console.error("Firebase Login Error:", e);
-                showMessage("خطأ تقني: " + e.message, "error");
+                if (!isAuto) showMessage("خطأ تقني في الاتصال. تأكد من الإنترنت.", "error");
             }
         }
 
@@ -330,11 +343,12 @@
 
             if (!name || !code) {
                 msg.innerText = "أدخل الاسم والكود!";
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-500/10 text-red-400 border border-red-500/20";
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-50 text-red-600 border border-red-200";
                 msg.classList.remove('hidden');
                 return;
             }
 
+            // حساب تاريخ انتهاء الصلاحية بعد 30 يوم من الآن
             const expiry = new Date();
             expiry.setDate(expiry.getDate() + days);
 
@@ -342,14 +356,14 @@
                 await setDoc(doc(db, "students", code), {
                     name, code, expiryDate: expiry.toISOString(), deviceId: "", createdAt: new Date().toISOString()
                 });
-                msg.innerText = "تمت إضافة الطالب بنجاح!";
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+                msg.innerText = "تمت إضافة الطالب بنجاح وصالح لمدة 30 يوم!";
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-emerald-50 text-emerald-600 border border-emerald-200";
                 msg.classList.remove('hidden');
                 loadStudentsList();
             } catch(e) {
                 console.error(e);
                 msg.innerText = "خطأ بالحفظ: " + e.message;
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-500/10 text-red-400 border border-red-500/20";
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-50 text-red-600 border border-red-200";
                 msg.classList.remove('hidden');
             }
         });
@@ -362,7 +376,7 @@
 
             if (!title || !url) {
                 msg.innerText = "أدخل عنوان ورابط الملف!";
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-500/10 text-red-400 border border-red-500/20";
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-50 text-red-600 border border-red-200";
                 msg.classList.remove('hidden');
                 return;
             }
@@ -372,41 +386,41 @@
                     section, title, url, createdAt: new Date().toISOString()
                 });
                 msg.innerText = "تم نشر المحتوى بنجاح!";
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-emerald-50 text-emerald-600 border border-emerald-200";
                 msg.classList.remove('hidden');
                 document.getElementById('content-title').value = "";
                 document.getElementById('content-url').value = "";
             } catch(e) {
                 console.error(e);
                 msg.innerText = "خطأ بالنشر: " + e.message;
-                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-500/10 text-red-400 border border-red-500/20";
+                msg.className = "p-3 rounded-2xl text-xs font-bold text-center bg-red-50 text-red-600 border border-red-200";
                 msg.classList.remove('hidden');
             }
         });
 
         window.loadStudentsList = async function() {
             const tbody = document.getElementById('students-table-body');
-            tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">جاري التحديث...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">جاري التحديث...</td></tr>`;
             try {
                 const snap = await getDocs(collection(db, "students"));
                 if (snap.empty) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">لا توجد أكواد مضافة حتى الآن.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">لا توجد أكواد مضافة حتى الآن.</td></tr>`;
                     return;
                 }
                 let html = "";
                 snap.forEach(d => {
                     const data = d.data();
                     const expiry = data.expiryDate ? new Date(data.expiryDate).toLocaleDateString('ar-EG') : "";
-                    const linked = data.deviceId ? '<span class="text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20">مربوط</span>' : '<span class="text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">متاح</span>';
+                    const linked = data.deviceId ? '<span class="text-amber-600 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200">مربوط بجهاز</span>' : '<span class="text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">متاح</span>';
                     html += `
-                        <tr class="hover:bg-slate-800/40 transition-all">
-                            <td class="p-3 font-bold text-slate-200">${data.name}</td>
-                            <td class="p-3 font-mono text-purple-400">${data.code}</td>
-                            <td class="p-3 text-slate-400">${expiry}</td>
+                        <tr class="hover:bg-slate-50 transition-all">
+                            <td class="p-3 font-bold text-slate-800">${data.name}</td>
+                            <td class="p-3 font-mono text-purple-700">${data.code}</td>
+                            <td class="p-3 text-slate-500">${expiry}</td>
                             <td class="p-3">${linked}</td>
                             <td class="p-3 text-center space-x-2 space-x-reverse">
-                                <button onclick="resetDev('${d.id}')" class="bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer">فك الجهاز</button>
-                                <button onclick="delStud('${d.id}')" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer">حذف</button>
+                                <button onclick="resetDev('${d.id}')" class="bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer">فك الجهاز</button>
+                                <button onclick="delStud('${d.id}')" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer">حذف</button>
                             </td>
                         </tr>
                     `;
@@ -414,7 +428,7 @@
                 tbody.innerHTML = html;
             } catch(e) {
                 console.error(e);
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-400">فشل التحميل: ${e.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-500">فشل التحميل: ${e.message}</td></tr>`;
             }
         };
 
@@ -450,7 +464,7 @@
                 'exams': 'الامتحانات الشاملة'
             };
             subTitle.innerText = titles[type] || 'محتوى المنصة';
-            subContent.innerHTML = `<p class="text-center text-slate-500 py-8">جاري جلب المحتوى...</p>`;
+            subContent.innerHTML = `<p class="text-center text-slate-400 py-12">جاري جلب المحتوى التعليمي...</p>`;
 
             try {
                 const snap = await getDocs(collection(db, "contents"));
@@ -459,23 +473,23 @@
                     const item = docSnap.data();
                     if(item.section === type) {
                         html += `
-                            <div class="p-4 bg-slate-950/50 net-item rounded-2xl border border-slate-800 flex justify-between items-center hover:border-purple-500/30 transition-all">
+                            <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 flex justify-between items-center hover:border-purple-300 shadow-xs transition-all">
                                 <div>
-                                    <h4 class="font-bold text-white text-xs md:text-sm">${item.title}</h4>
-                                    <p class="text-slate-400 text-[11px] mt-1">محتوى تعليمي معتمد</p>
+                                    <h4 class="font-bold text-slate-900 text-sm md:text-base">${item.title}</h4>
+                                    <p class="text-slate-500 text-xs mt-1">محتوى تعليمي معتمد من سنتر التفوق</p>
                                 </div>
-                                <a href="${item.url}" target="_blank" class="bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition-all">فتح الملف</a>
+                                <a href="${item.url}" target="_blank" class="bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold px-5 py-3 rounded-2xl shadow-md transition-all">فتح المحتوى ↗</a>
                             </div>
                         `;
                     }
                 });
 
                 if(!html) {
-                    html = `<p class="text-center text-slate-500 py-10 text-xs">لا توجد ملفات مضافة في هذا القسم حتى الآن.</p>`;
+                    html = `<div class="flex-1 flex flex-col items-center justify-center text-center py-16"><p class="text-slate-400 text-sm">لا توجد ملفات مضافة في هذا القسم حتى الآن.</p></div>`;
                 }
                 subContent.innerHTML = html;
             } catch(e) {
-                subContent.innerHTML = `<p class="text-center text-red-400 py-4 text-xs">خطأ في جلب المحتوى: ${e.message}</p>`;
+                subContent.innerHTML = `<p class="text-center text-red-500 py-4 text-xs">خطأ في جلب المحتوى: ${e.message}</p>`;
             }
         }
 
