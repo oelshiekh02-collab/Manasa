@@ -6,7 +6,7 @@
     <title>سنتر التفوق - للأحياء</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     
-    <!-- استدعاء فايربيس بالطريقة المستقرة للبراوزر (بدون مشاكل Modules) -->
+    <!-- مكتبات فايربيس المستقرة والمتوافقة مع المتصفحات -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    <!-- 3. واجهة الطالب -->
+    <!-- 3. واجهة الطالب (القائمة الرئيسية) -->
     <div id="student-dashboard" class="container hidden animate-fade" style="max-width: 800px;">
         <div class="header-flex">
             <div>
@@ -176,7 +176,7 @@
         </div>
     </div>
 
-    <!-- 4. صفحة القسم المتكاملة -->
+    <!-- 4. صفحة القسم المتكاملة المنفصلة -->
     <div id="section-page" class="container hidden animate-fade" style="max-width: 800px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <button onclick="backToDashboard()" style="background: #64748b; width: auto; padding: 8px 18px; font-size: 13px; box-shadow: none; margin: 0;">← العودة للقائمة الرئيسية</button>
@@ -188,7 +188,7 @@
         </div>
     </div>
 
-    <!-- السكريبت المتوافق 100% -->
+    <!-- تشغيل النظام بالكامل -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyDp3uu1IFemjPjdHYMMH9vtz4Sr1SCaz9o",
@@ -199,7 +199,6 @@
             appId: "1:682035204936:web:766a346a441754b76d197d"
         };
 
-        // تهيئة فايربيس بالطريقة المستقرة
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const ADMIN_PASS = "Omar2009";
@@ -358,43 +357,4 @@
                     const item = docSnap.data();
                     if (item.section === type) {
                         html += `
-                            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:18px 22px; border-radius:18px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 4px rgba(0,0,0,0.02);">
-                                <div><b style="font-size:16px; color:#0f172a;">${item.title}</b></div>
-                                <a href="${item.url}" target="_blank" style="background:#7e22ce; color:white; padding:10px 18px; border-radius:14px; text-decoration:none; font-size:13px; font-weight:700; box-shadow:0 4px 6px rgba(126,34,206,0.2);">فتح المحتوى ↗</a>
-                            </div>
-                        `;
-                    }
-                });
-                contentBox.innerHTML = html || "<p style='text-align:center; color:#94a3b8; padding:60px;'>لا توجد ملفات أو محاضرات مضافة في هذا القسم حالياً.</p>";
-            } catch(e) {
-                contentBox.innerHTML = "<p style='text-align:center; color:#ef4444; padding:30px;'>خطأ في جلب المحتوى من القاعدة.</p>";
-            }
-        }
-
-        function reloadCurrentSection() {
-            if (currentActiveSection) {
-                openSectionPage(currentActiveSection);
-            }
-        }
-
-        function backToDashboard() {
-            document.getElementById('section-page').classList.add('hidden');
-            document.getElementById('student-dashboard').classList.remove('hidden');
-        }
-
-        // التحقق التلقائي عند التحميل
-        window.onload = function() {
-            if (localStorage.getItem('admin_logged') === 'true') {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('admin-dashboard').classList.remove('hidden');
-                loadStudents();
-            } else if (localStorage.getItem('student_name')) {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('student-dashboard').classList.remove('hidden');
-                document.getElementById('student-welcome').innerText = `مرحباً بك يا بطل: ${localStorage.getItem('student_name')}`;
-            }
-        };
-    </script>
-
-</body>
-</html>
+                            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:18px 22px; border-radius:18px; margin-bottom:15px; display:flex; justify-content:space-between; align-
